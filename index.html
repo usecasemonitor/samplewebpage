@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SuperQA Demo Store</title>
+<title>SuperQA Ecommerce Test</title>
 
 <style>
 
 body{
-font-family: Arial;
-background:#f4f4f4;
+font-family:Arial;
 margin:0;
+background:#f4f4f4;
 }
 
 header{
@@ -18,49 +18,33 @@ padding:15px;
 text-align:center;
 }
 
-.container{
-padding:30px;
+.page{
+display:none;
+padding:40px;
 }
 
-.products{
-display:flex;
-gap:20px;
+.active{
+display:block;
 }
 
 .product{
 background:white;
 padding:20px;
-border-radius:6px;
 width:200px;
-box-shadow:0 0 5px rgba(0,0,0,0.2);
-text-align:center;
+border-radius:6px;
+box-shadow:0 0 6px rgba(0,0,0,0.2);
 }
 
 button{
 background:#ff3f6c;
-border:none;
 color:white;
+border:none;
 padding:10px 15px;
 cursor:pointer;
-margin-top:10px;
 }
 
 button:hover{
 background:#e0315c;
-}
-
-#cart{
-display:none;
-margin-top:30px;
-background:white;
-padding:20px;
-}
-
-#checkout{
-display:none;
-margin-top:30px;
-background:white;
-padding:20px;
 }
 
 input{
@@ -70,27 +54,46 @@ padding:8px;
 width:250px;
 }
 
+#cartDrawer{
+position:fixed;
+right:-300px;
+top:0;
+width:300px;
+height:100%;
+background:white;
+box-shadow:-2px 0 10px rgba(0,0,0,0.3);
+padding:20px;
+transition:0.4s;
+}
+
 </style>
 
 <script>
 
-function addToCart(product){
+function openProduct(){
 
-document.getElementById("cart").style.display="block"
+document.getElementById("landingPage").classList.remove("active")
+document.getElementById("productPage").classList.add("active")
 
-document.getElementById("cart-product").innerText=product
+}
+
+function addToCart(){
+
+document.getElementById("cartDrawer").style.right="0"
 
 }
 
 function goCheckout(){
 
-document.getElementById("checkout").style.display="block"
+document.getElementById("productPage").classList.remove("active")
+document.getElementById("checkoutPage").classList.add("active")
 
 }
 
 function placeOrder(){
 
-alert("Order Placed Successfully")
+document.getElementById("checkoutPage").classList.remove("active")
+document.getElementById("successPage").classList.add("active")
 
 }
 
@@ -100,36 +103,25 @@ alert("Order Placed Successfully")
 
 <body>
 
-<header id="header-title">
-SuperQA Demo Fashion Store
+<header id="store-header">
+SuperQA Fashion Store
 </header>
 
-<div class="container">
 
-<h2 id="product-landing-title">Trending Products</h2>
+<!-- LANDING PAGE -->
 
-<div class="products" id="product-list">
+<div id="landingPage" class="page active">
 
-<div class="product" id="product-card-1">
+<h2 id="landing-title">Trending Products</h2>
 
-<h3 class="product-name">Running Shoes</h3>
+<div class="product" id="product-card">
 
-<p class="product-price">$59</p>
+<h3 id="product-name">Running Shoes</h3>
 
-<button id="add-to-cart-btn-1" onclick="addToCart('Running Shoes')">
-Add to Cart
-</button>
+<p id="product-price">$59</p>
 
-</div>
-
-<div class="product" id="product-card-2">
-
-<h3 class="product-name">Denim Jacket</h3>
-
-<p class="product-price">$89</p>
-
-<button id="add-to-cart-btn-2" onclick="addToCart('Denim Jacket')">
-Add to Cart
+<button id="view-product-btn" onclick="openProduct()">
+View Product
 </button>
 
 </div>
@@ -137,30 +129,54 @@ Add to Cart
 </div>
 
 
-<div id="cart">
 
-<h2 id="cart-title">Cart</h2>
+<!-- PRODUCT PAGE -->
 
-<p>Product: <span id="cart-product"></span></p>
+<div id="productPage" class="page">
+
+<h2 id="product-detail-title">Running Shoes</h2>
+
+<p id="product-description">
+Comfort running shoes for daily workouts
+</p>
+
+<button id="add-to-cart-btn" onclick="addToCart()">
+Add to Cart
+</button>
+
+</div>
+
+
+
+<!-- CART DRAWER -->
+
+<div id="cartDrawer">
+
+<h3 id="cart-title">Cart</h3>
+
+<p id="cart-product-name">Running Shoes</p>
 
 <button id="checkout-btn" onclick="goCheckout()">
-Proceed to Checkout
+Checkout
 </button>
 
 </div>
 
 
-<div id="checkout">
+
+<!-- CHECKOUT PAGE -->
+
+<div id="checkoutPage" class="page">
 
 <h2 id="checkout-title">Checkout</h2>
 
-<input id="name-field" placeholder="Full Name">
+<input id="name-input" placeholder="Full Name">
 
-<input id="address-field" placeholder="Address">
+<input id="address-input" placeholder="Address">
 
-<input id="city-field" placeholder="City">
+<input id="city-input" placeholder="City">
 
-<input id="phone-field" placeholder="Phone Number">
+<input id="phone-input" placeholder="Phone">
 
 <button id="place-order-btn" onclick="placeOrder()">
 Place Order
@@ -168,7 +184,22 @@ Place Order
 
 </div>
 
+
+
+<!-- SUCCESS PAGE -->
+
+<div id="successPage" class="page">
+
+<h2 id="order-success-title">
+Order Placed Successfully
+</h2>
+
+<p id="order-message">
+Thank you for your purchase
+</p>
+
 </div>
+
 
 </body>
 </html>
